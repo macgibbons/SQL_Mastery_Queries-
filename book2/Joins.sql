@@ -46,6 +46,16 @@ FROM
 INNER JOIN employees e
 	ON e.dealership_id = d.dealership_id
 
+-- With Join table
+SELECT
+    d.business_name, CONCAT(e.first_name, ' ', e.last_name) as employee_last_name
+FROM
+    dealerships d  
+LEFT JOIN
+    dealershipemployees de ON d.dealership_id = de.dealership_id
+LEFT JOIN
+    employees e ON e.employee_id = de.employee_id
+
 
 -- Get a list of vehicles with the names of the body type, make, model and color.
 
