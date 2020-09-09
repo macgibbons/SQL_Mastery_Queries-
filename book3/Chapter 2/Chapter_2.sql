@@ -24,12 +24,12 @@ SET
     NULL;
 
 ALTER TABLE
-    dealershipemployees DROP CONSTRAINT dealershipemployees_employee_id_fkey;
+    dealershipemployees DROP CONSTRAINT sales_employee_id_fkey;
 
 ALTER TABLE
     dealershipemployees
 ADD
-    CONSTRAINT sales_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employees (employee_id) ON DELETE
+    CONSTRAINT dealershipemployees_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employees (employee_id) ON DELETE
 SET
     NULL;
 
