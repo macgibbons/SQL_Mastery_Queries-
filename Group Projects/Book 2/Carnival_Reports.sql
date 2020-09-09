@@ -52,20 +52,20 @@ LIMIT
 
 -- Which employees generate the most income per dealership?
 SELECT
+    DISTINCT ON (d.dealership_id) d.dealership_id,
     SUM(s.price) AS total_purchase_sales,
     d.business_name,
-    d.dealership_id,
     CONCAT(e.first_name, ' ', e.last_name) AS Employee_name
 FROM
     Sales s
     JOIN employees e ON s.employee_id = e.employee_id
-    JOIN dealershipemployees de ON de.employee_id = e.employee_id
-    JOIN dealerships d ON d.dealership_id = de.dealership_id
+    JOIN dealerships d ON d.dealership_id = s.dealership_id
 GROUP BY
     d.dealership_id,
     Employee_name
 ORDER BY
-    d.dealership_id ASC;
+    d.dealership_id,
+    total_purchase_sales DESC;
 
 --In our Vehicle inventory, show the count of each Model that is in stock.
 SELECT
