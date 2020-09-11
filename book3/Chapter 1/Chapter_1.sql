@@ -2,11 +2,12 @@
 -- Rheta Raymen an employee of Carnival has asked to be transferred to a different dealership location. 
 -- She is currently at dealership 751. She would like to work at dealership 20. Update her record to reflect her transfer.
 UPDATE
-    dealershipemployees de
+    dealershipemployees
 SET
     dealership_id = 20
 WHERE
-    de.employee_id = 680;
+    employee_id = 680
+    AND dealership_id = 751;
 
 ---------- Practice: Sales ----------
 -- A Sales associate needs to update a sales record because her customer want so pay wish 
