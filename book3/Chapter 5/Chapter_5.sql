@@ -21,11 +21,10 @@ INSERT
 -- If the pickup date is on or before the purchase date, 
 -- set the pickup date to 7 days after the purchase date. 
 -- If the pickup date is after the purchase date but less than 7 days out from the purchase date, add 4 additional days to the pickup date.
-CREATE
-OR Replace FUNCTION update_pickup_date() RETURNS TRIGGER LANGUAGE plpgsql AS $ $ BEGIN IF NEW.pickup_date <= NEW.purchase_date THEN NEW.pickup_date = NEW.purchase_date + 7;
+CREATE FUNCTION update_pickup_date() RETURNS TRIGGER LANGUAGE plpgsql AS $ $ BEGIN IF NEW.pickup_date <= NEW.purchase_date THEN NEW.pickup_date := NEW.purchase_date + 7;
 
 ELSIF NEW.pickup_date > NEW.purchase_date
-AND NEW.pickup_date < NEW.purchase_date + 7 THEN NEW.pickup_date = NEW.pickup_date + 4;
+AND NEW.pickup_date < NEW.purchase_date + 7 THEN NEW.pickup_date := NEW.pickup_date + 4;
 
 END IF;
 
