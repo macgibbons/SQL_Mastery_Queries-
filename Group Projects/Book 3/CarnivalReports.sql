@@ -144,3 +144,34 @@ CALL add_new_employee_to_dealerships(
     7,
     3
 );
+
+-- Create a stored procedure with a transaction to handle an employee leaving.
+-- The employee record is removed and all records associating the employee with dealerships must also be removed.
+ALTER TABLE
+    employees
+ADD
+    COLUMN isActive bool NOT NULL DEFAULT TRUE;
+
+CREATE
+OR REPLACE PROCEDURE employees_leaving_dealerships (employee_id INT) LANGUAGE plpgsql AS $ $ BEGIN
+UPDATE
+    employees e
+SET
+    isActive = false
+WHERE
+    e.employee_id = e.employee_id;
+
+DELETE FROM
+    dealershipemployees de
+WHERE
+    de.employee_id = de.employee_id;
+
+COMMIT;
+
+EXCEPTION
+WHEN others THEN RAISE NOTICE 'You messed up(%)',
+employee_id;
+
+ROLLBACK;
+
+END $ $;
